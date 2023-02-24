@@ -11,6 +11,9 @@ public class Cliente {
     private String movil;
     private List<Direccion> direcciones;
 
+    public Cliente() {
+    }
+
     public Cliente(String id, String tipoIdentificacion, String numIdentificacion, String nombres, String correo,
             String movil) {
         this.id = id;

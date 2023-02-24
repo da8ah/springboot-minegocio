@@ -1,8 +1,11 @@
 package com.minegocio.data.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.minegocio.core.entities.Cliente;
 import com.minegocio.core.entities.Direccion;
 
 import jakarta.persistence.Basic;
@@ -12,8 +15,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-// import jakarta.persistence.NamedQueries;
-// import jakarta.persistence.NamedQuery;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -23,10 +26,9 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "clientes")
-// @NamedQueries({
-// @NamedQuery(name = "Clientes.findByIdclientes", query = "SELECT c FROM
-// Clientes c WHERE c.idclientes = :idclientes"),
-// })
+@NamedQueries({
+        @NamedQuery(name = "Clientes.findByNumIdentificacion", query = "SELECT c FROM ClienteEntity c WHERE LOWER(c.numIdentificacion) LIKE '%' || LOWER(:query) || '%'")
+})
 public class ClienteEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,23 +39,21 @@ public class ClienteEntity implements Serializable {
     private Integer idclientes;
     @Basic(optional = false)
     @Column(name = "tipoIdentificacion")
-    private Integer tipoIdentificacion;
+    private String tipoIdentificacion;
     @Basic(optional = false)
     @Column(name = "numIdentificacion")
-    private Integer numIdentificacion;
+    private String numIdentificacion;
     @Basic(optional = false)
     @Column(name = "nombres")
     private String nombres;
-    @Column(name = "direccion")
-    private String direccion;
     @Basic(optional = false)
     @Column(name = "correo")
     private String correo;
     @Basic(optional = false)
     @Column(name = "movil")
     private String movil;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientesIdclientes")
-    private List<Direccion> direcciones;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddirecciones")
+    private List<DireccionEntity> direcciones;
 
     public ClienteEntity() {
     }
@@ -62,13 +62,12 @@ public class ClienteEntity implements Serializable {
         this.idclientes = idclientes;
     }
 
-    public ClienteEntity(Integer idclientes, Integer tipoIdentificacion, Integer numIdentificacion, String nombres,
+    public ClienteEntity(Integer idclientes, String tipoIdentificacion, String numIdentificacion, String nombres,
             String direccion, String correo, String movil) {
         this.idclientes = idclientes;
         this.tipoIdentificacion = tipoIdentificacion;
         this.numIdentificacion = numIdentificacion;
         this.nombres = nombres;
-        this.direccion = direccion;
         this.correo = correo;
         this.movil = movil;
     }
@@ -81,19 +80,19 @@ public class ClienteEntity implements Serializable {
         this.idclientes = idclientes;
     }
 
-    public Integer getTipoIdentificacion() {
+    public String getTipoIdentificacion() {
         return tipoIdentificacion;
     }
 
-    public void setTipoIdentificacion(Integer tipoIdentificacion) {
+    public void setTipoIdentificacion(String tipoIdentificacion) {
         this.tipoIdentificacion = tipoIdentificacion;
     }
 
-    public Integer getNumIdentificacion() {
+    public String getNumIdentificacion() {
         return numIdentificacion;
     }
 
-    public void setNumIdentificacion(Integer numIdentificacion) {
+    public void setNumIdentificacion(String numIdentificacion) {
         this.numIdentificacion = numIdentificacion;
     }
 
@@ -103,14 +102,6 @@ public class ClienteEntity implements Serializable {
 
     public void setNombres(String nombres) {
         this.nombres = nombres;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public String getCorreo() {
@@ -129,11 +120,11 @@ public class ClienteEntity implements Serializable {
         this.movil = movil;
     }
 
-    public List<Direccion> getDirecciones() {
+    public List<DireccionEntity> getDirecciones() {
         return direcciones;
     }
 
-    public void setDirecciones(List<Direccion> direcciones) {
+    public void setDirecciones(List<DireccionEntity> direcciones) {
         this.direcciones = direcciones;
     }
 
@@ -161,6 +152,19 @@ public class ClienteEntity implements Serializable {
     @Override
     public String toString() {
         return "Clientes[ idclientes=" + idclientes + " ]";
+    }
+
+    public Cliente toCliente() {
+        Cliente cliente = new Cliente(this.idclientes.toString(), this.tipoIdentificacion, this.numIdentificacion,
+                this.nombres, this.correo, this.movil);
+
+        if (this.direcciones != null) {
+            ArrayList<Direccion> direcciones = this.direcciones.stream()
+                    .map(element -> element.toDireccion())
+                    .collect(Collectors.toCollection(ArrayList::new));
+            cliente.setDirecciones(direcciones);
+        }
+        return cliente;
     }
 
 }

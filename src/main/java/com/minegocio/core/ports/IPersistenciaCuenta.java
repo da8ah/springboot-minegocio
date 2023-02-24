@@ -7,7 +7,7 @@ import com.minegocio.core.entities.Direccion;
 
 public interface IPersistenciaCuenta {
 
-    public Cliente filtrarCuentas(String query);
+    public List<Cliente> filtrarCuentas(String query);
 
     public boolean guardarCuentaCreada(Cliente cliente);
 
