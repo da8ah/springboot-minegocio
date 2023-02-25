@@ -28,7 +28,7 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
             ArrayList<ClienteEntity> entities = (ArrayList<ClienteEntity>) this.clienteRepository
                     .findByNumIdentificacion(query);
             clientes = entities.stream()
-                    .map(element -> element.toCliente())
+                    .map(element -> element.toClienteConUnaDireccion())
                     .collect(Collectors.toCollection(ArrayList::new));
         }
         patternQuery = Pattern.compile("^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\\s]+$", Pattern.CASE_INSENSITIVE);
@@ -36,7 +36,7 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
             ArrayList<ClienteEntity> entities = (ArrayList<ClienteEntity>) this.clienteRepository
                     .findByNombres(query);
             clientes = entities.stream()
-                    .map(element -> element.toCliente())
+                    .map(element -> element.toClienteConUnaDireccion())
                     .collect(Collectors.toCollection(ArrayList::new));
         }
         return clientes;

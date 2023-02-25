@@ -150,6 +150,20 @@ public class ClienteEntity implements Serializable {
         return "Clientes[ idclientes=" + idclientes + " ]";
     }
 
+    public Cliente toClienteConUnaDireccion() {
+        Cliente cliente = new Cliente(this.idclientes.toString(),
+                this.tipoIdentificacion.equalsIgnoreCase("DNI") ? 0 : 1,
+                this.numIdentificacion,
+                this.nombres, this.correo, this.movil);
+
+        if (!this.direcciones.isEmpty()) {
+            ArrayList<Direccion> direcciones = new ArrayList<>();
+            direcciones.add(this.direcciones.get(0).toDireccion());
+            cliente.setDirecciones(direcciones);
+        }
+        return cliente;
+    }
+
     public Cliente toCliente() {
         Cliente cliente = new Cliente(this.idclientes.toString(),
                 this.tipoIdentificacion.equalsIgnoreCase("DNI") ? 0 : 1,
