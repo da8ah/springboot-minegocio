@@ -12,4 +12,6 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, Long> {
 
     List<ClienteEntity> findByNumIdentificacion(String query);
 
+    List<ClienteEntity> findByNombres(String query);
+
 }

@@ -3,6 +3,7 @@ package com.minegocio.data.adapters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,24 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
 
     @Override
     public ArrayList<Cliente> filtrarCuentas(String query) {
-        ArrayList<ClienteEntity> entities = (ArrayList<ClienteEntity>) this.clienteRepository
-                .findByNumIdentificacion(query);
-        ArrayList<Cliente> clientes = entities.stream()
-                .map(element -> element.toCliente())
-                .collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        Pattern patternQuery;
+        patternQuery = Pattern.compile("^[0-9]+$");
+        if (patternQuery.matcher(query).matches()) {
+            ArrayList<ClienteEntity> entities = (ArrayList<ClienteEntity>) this.clienteRepository
+                    .findByNumIdentificacion(query);
+            clientes = entities.stream()
+                    .map(element -> element.toCliente())
+                    .collect(Collectors.toCollection(ArrayList::new));
+        }
+        patternQuery = Pattern.compile("^[A-Za-z\\s]+$", Pattern.CASE_INSENSITIVE);
+        if (patternQuery.matcher(query).matches()) {
+            ArrayList<ClienteEntity> entities = (ArrayList<ClienteEntity>) this.clienteRepository
+                    .findByNombres(query);
+            clientes = entities.stream()
+                    .map(element -> element.toCliente())
+                    .collect(Collectors.toCollection(ArrayList::new));
+        }
         return clientes;
     }
 

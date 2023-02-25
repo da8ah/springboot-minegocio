@@ -26,8 +26,14 @@ public class ClienteController {
 
     @PostMapping(API_PATH + "/registro")
     public String registro(@RequestBody Cliente cliente) {
-        CrearCliente usecase = new CrearCliente();
-        return "msg: " + usecase.guardarCuentaCreada(cliente, persistenciaCuenta);
+        String response;
+        if (cliente.isValid() && cliente.getDirecciones().get(0).isValid()) {
+            CrearCliente usecase = new CrearCliente();
+            response = "msg: " + usecase.guardarCuentaCreada(cliente, persistenciaCuenta);
+        } else
+            response = cliente.toString();
+
+        return response;
     }
 
     @GetMapping(API_PATH + "/filtrar")
