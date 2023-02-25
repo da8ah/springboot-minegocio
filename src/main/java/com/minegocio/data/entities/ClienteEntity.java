@@ -27,8 +27,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "clientes")
 @NamedQueries({
-        @NamedQuery(name = "Clientes.findByNumIdentificacion", query = "SELECT c FROM ClienteEntity c WHERE LOWER(c.numIdentificacion) LIKE '%' || LOWER(:query) || '%'"),
-        @NamedQuery(name = "Clientes.findByNombres", query = "SELECT c FROM ClienteEntity c WHERE LOWER(c.nombres) LIKE '%' || LOWER(:query) || '%'")
+        @NamedQuery(name = "Clientes.findByNumIdentificacion", query = "SELECT c FROM ClienteEntity c WHERE (LOWER(c.numIdentificacion) LIKE concat('%'||LOWER(:query)||'%'))"),
+        @NamedQuery(name = "Clientes.findByNombres", query = "SELECT c FROM ClienteEntity c WHERE (LOWER(c.nombres) LIKE concat('%'||LOWER(:query)||'%'))")
 })
 public class ClienteEntity implements Serializable {
 

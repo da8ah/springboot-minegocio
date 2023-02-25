@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.minegocio.core.entities.Cliente;
+import com.minegocio.core.usecases.ActualizarCliente;
 import com.minegocio.core.usecases.BuscarClientes;
 import com.minegocio.core.usecases.CrearCliente;
 import com.minegocio.core.usecases.EliminarCliente;
@@ -43,6 +45,19 @@ public class ClienteController {
     public String buscar(@RequestParam(value = "query") String query) {
         BuscarClientes usecase = new BuscarClientes();
         return usecase.medianteString(query, persistenciaCuenta).toString();
+    }
+
+    @PutMapping(API_PATH + "/actualizar/{id}")
+    public String actualizar(@PathVariable(value = "id") int id, @RequestBody Cliente cliente) {
+        String response;
+        if (cliente.isValid() && cliente.getDirecciones().get(0).isValid()) {
+            ActualizarCliente usecase = new ActualizarCliente();
+            cliente.setId(String.valueOf(id));
+            response = usecase.actualizarCuenta(cliente, persistenciaCuenta).toString();
+        } else
+            response = cliente.toString();
+
+        return response;
     }
 
     @DeleteMapping(API_PATH + "/destruir/{id}")

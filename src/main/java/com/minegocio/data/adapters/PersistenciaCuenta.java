@@ -32,7 +32,7 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
                     .map(element -> element.toCliente())
                     .collect(Collectors.toCollection(ArrayList::new));
         }
-        patternQuery = Pattern.compile("^[A-Za-z\\s]+$", Pattern.CASE_INSENSITIVE);
+        patternQuery = Pattern.compile("^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\\s]+$", Pattern.CASE_INSENSITIVE);
         if (patternQuery.matcher(query).matches()) {
             ArrayList<ClienteEntity> entities = (ArrayList<ClienteEntity>) this.clienteRepository
                     .findByNombres(query);
@@ -64,8 +64,26 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
 
     @Override
     public Cliente actualizarCuenta(Cliente cliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizarCuenta'");
+        ClienteEntity clienteEntity = new ClienteEntity();
+        clienteEntity.setIdclientes(Integer.valueOf(cliente.getId()));
+        clienteEntity.setNombres(cliente.getNombres());
+        clienteEntity.setTipoIdentificacion(cliente.getTipoIdentificacion());
+        clienteEntity.setNumIdentificacion(cliente.getNumIdentificacion());
+        clienteEntity.setCorreo(cliente.getCorreo());
+        clienteEntity.setMovil(cliente.getMovil());
+        ArrayList<DireccionEntity> direcciones = new ArrayList<>();
+        direcciones = cliente.getDirecciones().stream()
+                .map((Direccion element) -> {
+                    return new DireccionEntity(
+                            Integer.valueOf(element.getId()),
+                            element.getProvincia(),
+                            element.getCiudad(),
+                            element.getDireccion());
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
+        clienteEntity.setDirecciones(direcciones);
+
+        return this.clienteRepository.save(clienteEntity).toCliente();
     }
 
     @Override
