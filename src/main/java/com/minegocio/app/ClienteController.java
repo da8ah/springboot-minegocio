@@ -1,7 +1,9 @@
 package com.minegocio.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.minegocio.core.entities.Cliente;
 import com.minegocio.core.usecases.BuscarClientes;
 import com.minegocio.core.usecases.CrearCliente;
+import com.minegocio.core.usecases.EliminarCliente;
 import com.minegocio.data.adapters.PersistenciaCuenta;
 
 @RestController
@@ -42,13 +45,12 @@ public class ClienteController {
         return usecase.medianteString(query, persistenciaCuenta).toString();
     }
 
-    // @DeleteMapping(API_PATH + "/destruir/{id}")
-    // public String destruir(@PathVariable(value = "numIdentificacion") String
-    // numIdentificacion) {
-    // EliminarCliente usecase = new EliminarCliente();
-    // Cliente cliente = new Cliente();
-    // cliente.setNumIdentificacion(numIdentificacion);
-    // return "msg: " + usecase.eliminarCuenta(cliente, persistenciaCuenta);
-    // }
+    @DeleteMapping(API_PATH + "/destruir/{id}")
+    public String destruir(@PathVariable(value = "id") int id) {
+        EliminarCliente usecase = new EliminarCliente();
+        Cliente cliente = new Cliente();
+        cliente.setId(String.valueOf(id));
+        return "msg: " + usecase.eliminarCuenta(cliente, persistenciaCuenta);
+    }
 
 }

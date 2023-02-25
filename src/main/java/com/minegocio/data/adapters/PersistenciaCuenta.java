@@ -70,8 +70,12 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
 
     @Override
     public boolean eliminarCuenta(Cliente cliente) {
-        // this.clienteRepository.de
-        return false;
+        try {
+            this.clienteRepository.deleteById(Long.parseLong(cliente.getId()));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
