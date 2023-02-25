@@ -2,6 +2,7 @@ package com.minegocio.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.minegocio.core.entities.Cliente;
 import com.minegocio.core.entities.Direccion;
@@ -18,6 +20,7 @@ import com.minegocio.core.usecases.BuscarClientes;
 import com.minegocio.core.usecases.CrearCliente;
 import com.minegocio.core.usecases.CrearDireccion;
 import com.minegocio.core.usecases.EliminarCliente;
+import com.minegocio.core.usecases.ListarDirecciones;
 import com.minegocio.data.adapters.PersistenciaCuenta;
 
 @RestController
@@ -40,7 +43,7 @@ public class ClienteController {
             return response;
         } catch (DataIntegrityViolationException e) {
             System.err.println(e);
-            return "{ status: 303, error: Duplicado }";
+            throw new ResponseStatusException(HttpStatus.SEE_OTHER, "Duplicado");
         }
 
     }
@@ -52,7 +55,7 @@ public class ClienteController {
             return usecase.medianteString(query, persistenciaCuenta).toString();
         } catch (Exception e) {
             System.err.println(e);
-            return "{ status: 500, error: Internal Server Error }";
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -70,7 +73,7 @@ public class ClienteController {
             return response;
         } catch (Exception e) {
             System.err.println(e);
-            return "{ status: 500, error: Internal Server Error }";
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -83,12 +86,12 @@ public class ClienteController {
             return "msg: " + usecase.eliminarCuenta(cliente, persistenciaCuenta);
         } catch (Exception e) {
             System.err.println(e);
-            return "{ status: 500, error: Internal Server Error }";
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping(API_PATH + "/{id}/direcciones")
-    public String agregarDireccion(@PathVariable(value = "id") int id, @RequestBody Direccion direccion) {
+    public String agregarDireccionAlCliente(@PathVariable(value = "id") int id, @RequestBody Direccion direccion) {
         try {
             String response;
             if (direccion.isValid()) {
@@ -102,7 +105,20 @@ public class ClienteController {
             return response;
         } catch (Exception e) {
             System.err.println(e);
-            return "{ status: 500, error: Internal Server Error }";
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(API_PATH + "/{id}/direcciones")
+    public String listarDireccionesDelCliente(@PathVariable(value = "id") int id) {
+        try {
+            ListarDirecciones usecase = new ListarDirecciones();
+            Cliente cliente = new Cliente();
+            cliente.setId(String.valueOf(id));
+            return usecase.obtenerDireccionesDelCliente(cliente, persistenciaCuenta).toString();
+        } catch (Exception e) {
+            System.err.println(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

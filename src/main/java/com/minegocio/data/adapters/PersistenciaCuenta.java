@@ -1,9 +1,8 @@
 package com.minegocio.data.adapters;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +52,7 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
         clienteEntity.setMovil(cliente.getMovil());
         ArrayList<DireccionEntity> direcciones = new ArrayList<>();
         DireccionEntity direccionEntity = new DireccionEntity();
+        direccionEntity.setClienteEntity(clienteEntity);
         direccionEntity.setProvincia(cliente.getDirecciones().get(0).getProvincia());
         direccionEntity.setCiudad(cliente.getDirecciones().get(0).getCiudad());
         direccionEntity.setDireccion(cliente.getDirecciones().get(0).getDireccion());
@@ -76,10 +76,12 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
                 .map((Direccion element) -> {
                     return element.getId().isBlank()
                             ? new DireccionEntity(
+                                    clienteEntity,
                                     element.getProvincia(),
                                     element.getCiudad(),
                                     element.getDireccion())
                             : new DireccionEntity(
+                                    clienteEntity,
                                     Integer.valueOf(element.getId()),
                                     element.getProvincia(),
                                     element.getCiudad(),
@@ -109,9 +111,8 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
     }
 
     @Override
-    public List<Direccion> obtenerDirecciones(Cliente cliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerDirecciones'");
+    public Cliente obtenerDirecciones(Cliente cliente) {
+        return this.clienteRepository.findById(Long.parseLong(cliente.getId())).get().toCliente();
     }
 
 }

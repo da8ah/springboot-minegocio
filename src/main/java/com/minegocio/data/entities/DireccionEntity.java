@@ -10,7 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQueries;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -19,13 +20,6 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "direcciones")
-@NamedQueries({
-// @NamedQuery(name = "Direcciones.findAll", query = "SELECT d FROM
-// Direccionesd"),
-// @NamedQuery(name = "Direcciones.findByIddirecciones", query = "SELECT d FROM
-// Clientes c, Direcciones d WHERE c.idclientes = :idclientes AND
-// d.iddirecciones = :iddirecciones")
-})
 public class DireccionEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,25 +37,40 @@ public class DireccionEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "direccion")
     private String direccion;
+    @ManyToOne
+    @JoinColumn(name = "idclientes_fk")
+    private ClienteEntity clienteEntity;
 
     public DireccionEntity() {
     }
 
-    public DireccionEntity(Integer iddirecciones) {
+    public DireccionEntity(ClienteEntity clienteEntity, Integer iddirecciones) {
+        this.clienteEntity = clienteEntity;
         this.iddirecciones = iddirecciones;
     }
 
-    public DireccionEntity(Integer iddirecciones, String provincia, String ciudad, String direccion) {
+    public DireccionEntity(ClienteEntity clienteEntity, Integer iddirecciones, String provincia, String ciudad,
+            String direccion) {
+        this.clienteEntity = clienteEntity;
         this.iddirecciones = iddirecciones;
         this.provincia = provincia;
         this.ciudad = ciudad;
         this.direccion = direccion;
     }
 
-    public DireccionEntity(String provincia, String ciudad, String direccion) {
+    public DireccionEntity(ClienteEntity clienteEntity, String provincia, String ciudad, String direccion) {
+        this.clienteEntity = clienteEntity;
         this.provincia = provincia;
         this.ciudad = ciudad;
         this.direccion = direccion;
+    }
+
+    public ClienteEntity getClienteEntity() {
+        return clienteEntity;
+    }
+
+    public void setClienteEntity(ClienteEntity clienteEntity) {
+        this.clienteEntity = clienteEntity;
     }
 
     public Integer getIddirecciones() {
@@ -119,7 +128,7 @@ public class DireccionEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "Direcciones[ iddirecciones=" + iddirecciones + " ]";
+        return "Direcciones[ idclientes=" + clienteEntity.getIdclientes() + "iddirecciones=" + iddirecciones + " ]";
     }
 
     public Direccion toDireccion() {

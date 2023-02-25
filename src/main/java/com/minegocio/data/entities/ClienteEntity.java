@@ -15,8 +15,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -26,10 +24,6 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "clientes")
-@NamedQueries({
-        @NamedQuery(name = "Clientes.findByNumIdentificacion", query = "SELECT c FROM ClienteEntity c WHERE (LOWER(c.numIdentificacion) LIKE concat('%'||LOWER(:query)||'%'))"),
-        @NamedQuery(name = "Clientes.findByNombres", query = "SELECT c FROM ClienteEntity c WHERE (LOWER(c.nombres) LIKE concat('%'||LOWER(:query)||'%'))")
-})
 public class ClienteEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,7 +47,8 @@ public class ClienteEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "movil")
     private String movil;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddirecciones")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteEntity")
+    @Column(name = "idclientes_fk")
     private List<DireccionEntity> direcciones;
 
     public ClienteEntity() {

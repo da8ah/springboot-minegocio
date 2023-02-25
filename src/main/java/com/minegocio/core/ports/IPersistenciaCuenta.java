@@ -17,6 +17,6 @@ public interface IPersistenciaCuenta {
 
     public Cliente registrarNuevaDireccion(Cliente cliente, Direccion direccion);
 
-    public List<Direccion> obtenerDirecciones(Cliente cliente);
+    public Cliente obtenerDirecciones(Cliente cliente);
 
 }
