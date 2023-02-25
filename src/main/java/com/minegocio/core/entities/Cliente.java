@@ -158,13 +158,13 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente { id:" + this.id +
-                ", tipoIdentificacion:" + this.tipoIdentificacion +
-                ", numIdentificacion:" + this.numIdentificacion +
-                ", nombres:" + this.nombres +
-                ", correo:" + this.correo +
-                ", movil:" + this.movil +
-                ", direcciones: " + this.direcciones.toString() +
+        return "{ \"id\":\"" + this.id +
+                "\", \"tipoIdentificacion\":\"" + this.tipoIdentificacion +
+                "\", \"numIdentificacion\":\"" + this.numIdentificacion +
+                "\", \"nombres\":\"" + this.nombres +
+                "\", \"correo\":\"" + this.correo +
+                "\", \"movil\":\"" + this.movil +
+                "\", \"direcciones\":" + this.direcciones.toString() +
                 " }";
     }
 

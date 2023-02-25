@@ -97,11 +97,11 @@ public class Direccion {
 
     @Override
     public String toString() {
-        return "Direccion { id:" + this.id +
-                ", provincia:" + this.provincia +
-                ", ciudad:" + this.ciudad +
-                ", direccion:" + this.direccion +
-                " }";
+        return "{ \"id\":\"" + this.id +
+                "\", \"provincia\":\"" + this.provincia +
+                "\", \"ciudad\":\"" + this.ciudad +
+                "\", \"direccion\":\"" + this.direccion +
+                "\" }";
     }
 
 }
