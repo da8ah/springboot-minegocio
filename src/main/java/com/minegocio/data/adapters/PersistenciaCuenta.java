@@ -74,11 +74,16 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
         ArrayList<DireccionEntity> direcciones = new ArrayList<>();
         direcciones = cliente.getDirecciones().stream()
                 .map((Direccion element) -> {
-                    return new DireccionEntity(
-                            Integer.valueOf(element.getId()),
-                            element.getProvincia(),
-                            element.getCiudad(),
-                            element.getDireccion());
+                    return element.getId().isBlank()
+                            ? new DireccionEntity(
+                                    element.getProvincia(),
+                                    element.getCiudad(),
+                                    element.getDireccion())
+                            : new DireccionEntity(
+                                    Integer.valueOf(element.getId()),
+                                    element.getProvincia(),
+                                    element.getCiudad(),
+                                    element.getDireccion());
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
         clienteEntity.setDirecciones(direcciones);
@@ -94,6 +99,13 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public Cliente registrarNuevaDireccion(Cliente cliente, Direccion direccion) {
+        cliente = this.clienteRepository.findById(Long.parseLong(cliente.getId())).get().toCliente();
+        cliente.getDirecciones().add(direccion);
+        return this.actualizarCuenta(cliente);
     }
 
     @Override

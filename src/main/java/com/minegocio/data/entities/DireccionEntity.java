@@ -58,6 +58,12 @@ public class DireccionEntity implements Serializable {
         this.direccion = direccion;
     }
 
+    public DireccionEntity(String provincia, String ciudad, String direccion) {
+        this.provincia = provincia;
+        this.ciudad = ciudad;
+        this.direccion = direccion;
+    }
+
     public Integer getIddirecciones() {
         return iddirecciones;
     }
@@ -117,8 +123,7 @@ public class DireccionEntity implements Serializable {
     }
 
     public Direccion toDireccion() {
-        Direccion direccion = new Direccion(this.iddirecciones.toString(), this.provincia, this.ciudad, this.direccion);
-        return direccion;
+        return new Direccion(this.iddirecciones.toString(), this.provincia, this.ciudad, this.direccion);
     }
 
 }

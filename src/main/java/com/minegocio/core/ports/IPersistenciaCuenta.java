@@ -15,6 +15,8 @@ public interface IPersistenciaCuenta {
 
     public boolean eliminarCuenta(Cliente cliente);
 
+    public Cliente registrarNuevaDireccion(Cliente cliente, Direccion direccion);
+
     public List<Direccion> obtenerDirecciones(Cliente cliente);
 
 }

@@ -42,7 +42,7 @@ public class ClienteEntity implements Serializable {
     @Column(name = "tipoIdentificacion")
     private String tipoIdentificacion;
     @Basic(optional = false)
-    @Column(name = "numIdentificacion")
+    @Column(name = "numIdentificacion", unique = true)
     private String numIdentificacion;
     @Basic(optional = false)
     @Column(name = "nombres")
@@ -161,7 +161,7 @@ public class ClienteEntity implements Serializable {
                 this.numIdentificacion,
                 this.nombres, this.correo, this.movil);
 
-        if (this.direcciones != null) {
+        if (!this.direcciones.isEmpty()) {
             ArrayList<Direccion> direcciones = this.direcciones.stream()
                     .map(element -> element.toDireccion())
                     .collect(Collectors.toCollection(ArrayList::new));

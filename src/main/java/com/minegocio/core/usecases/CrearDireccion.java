@@ -8,8 +8,7 @@ public class CrearDireccion {
 
     public Cliente registrarNuevaDireccion(Cliente cliente, Direccion direccion,
             IPersistenciaCuenta iPersistenciaCuenta) {
-        cliente.getDirecciones().add(direccion);
-        return iPersistenciaCuenta.actualizarCuenta(cliente);
+        return iPersistenciaCuenta.registrarNuevaDireccion(cliente, direccion);
     }
 
 }
