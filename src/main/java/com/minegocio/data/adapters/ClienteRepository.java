@@ -14,7 +14,7 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, Long> {
     @Query("SELECT c FROM ClienteEntity c JOIN c.direcciones WHERE c.numIdentificacion LIKE '%' || :query || '%'")
     List<ClienteEntity> findByNumIdentificacion(String query);
 
-    @Query("SELECT c FROM ClienteEntity c JOIN c.direcciones WHERE c.nombres LIKE '%' || :query || '%'")
+    @Query("SELECT c FROM ClienteEntity c JOIN c.direcciones WHERE lower(c.nombres) LIKE '%' || lower(:query) || '%'")
     List<ClienteEntity> findByNombres(String query);
 
 }
