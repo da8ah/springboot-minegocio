@@ -37,10 +37,10 @@ public class ClienteController {
             if (cliente.isValid() && cliente.getDirecciones().get(0).isValid()) {
                 CrearCliente usecase = new CrearCliente();
                 response = "msg: " + usecase.guardarCuentaCreada(cliente, persistenciaCuenta);
+                return response;
             } else
-                response = cliente.toString();
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, cliente.toString());
 
-            return response;
         } catch (DataIntegrityViolationException e) {
             System.err.println(e);
             throw new ResponseStatusException(HttpStatus.SEE_OTHER, "Duplicado");
@@ -67,10 +67,10 @@ public class ClienteController {
                 ActualizarCliente usecase = new ActualizarCliente();
                 cliente.setId(String.valueOf(id));
                 response = usecase.actualizarCuenta(cliente, persistenciaCuenta).toString();
+                return response;
             } else
-                response = cliente.toString();
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, cliente.toString());
 
-            return response;
         } catch (Exception e) {
             System.err.println(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -99,10 +99,10 @@ public class ClienteController {
                 Cliente cliente = new Cliente();
                 cliente.setId(String.valueOf(id));
                 response = usecase.registrarNuevaDireccion(cliente, direccion, persistenciaCuenta).toString();
+                return response;
             } else
-                response = direccion.toString();
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, direccion.toString());
 
-            return response;
         } catch (Exception e) {
             System.err.println(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
