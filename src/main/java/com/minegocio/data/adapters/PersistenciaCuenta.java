@@ -19,6 +19,11 @@ public class PersistenciaCuenta implements IPersistenciaCuenta {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    public PersistenciaCuenta(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
+
     @Override
     public ArrayList<Cliente> filtrarCuentas(String query) {
         ArrayList<Cliente> clientes = new ArrayList<>();

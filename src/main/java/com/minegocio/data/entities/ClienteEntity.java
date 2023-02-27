@@ -59,7 +59,7 @@ public class ClienteEntity implements Serializable {
     }
 
     public ClienteEntity(Integer idclientes, String tipoIdentificacion, String numIdentificacion, String nombres,
-            String direccion, String correo, String movil) {
+            String correo, String movil) {
         this.idclientes = idclientes;
         this.tipoIdentificacion = tipoIdentificacion;
         this.numIdentificacion = numIdentificacion;

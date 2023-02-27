@@ -3,12 +3,13 @@
 ## Requerimientos
 - [x] Objetos enviados y retornados en formato JSON
 - [x] Buenas prácticas (Clean Code, SOLID)
-- [ ] TDD
+- [x] Validación de Entrada de Datos
+- [x] TDD
 - [x] Java 8+
 - [x] SpringBoot
 - [x] PostgreSQL
 - [x] Clean Architecture
-- [ ] JUnit y Mockito
+- [x] JUnit y Mockito
 
 ## Funcionalidades
 - [x] Funcionalidad para buscar y obtener un listado de Clientes con una Dirección
@@ -32,8 +33,8 @@
 El sistema Mi negocio permite registrar de manera rápida una factura a consumidor final o cualquier otro cliente registrando los datos al momento de la facturación. Pero se necesita mejorar este proceso y es necesario tener una base de clientes por cada empresa que utiliza el sistema, de tal manera que al momento de facturar se pueda buscar un cliente por número de identificación o nombre.
 
 <div align="center" style="width:100%;flex-direction:row">
-<img style="width:40%" src="./doc/ClassDiagram.png" >
 <img style="width:40%" src="./doc/UseCaseDiagram.png" >
+<img style="width:40%" src="./doc/ClassDiagram.png" >
 </div>
 
 ## Resultado
@@ -42,9 +43,11 @@ El sistema Mi negocio permite registrar de manera rápida una factura a consumid
 <div align="center">
 <img style="width:70%" src="./doc/postman-registro-1.png" >
 </div>
+</br>
 <div align="center">
 <img style="width:70%" src="./doc/postman-registro-2.png" >
 </div>
+</br>
 <div align="center">
 <img style="width:70%" src="./doc/postman-registro-3.png" >
 </div>
@@ -63,9 +66,11 @@ El sistema Mi negocio permite registrar de manera rápida una factura a consumid
 <div align="center">
 <img style="width:70%" src="./doc/postman-filtrar-1.png" >
 </div>
+</br>
 <div align="center">
 <img style="width:70%" src="./doc/postman-filtrar-2.png" >
 </div>
+</br>
 <div align="center">
 <img style="width:70%" src="./doc/postman-filtrar-3.png" >
 </div>
@@ -80,10 +85,19 @@ El sistema Mi negocio permite registrar de manera rápida una factura a consumid
 <img style="width:70%" src="./doc/postman-destruir-1.png" >
 </div>
 
+### Testing
+<div align="center">
+<img style="width:50%" src="./doc/testing.png" >
+</div>
+
 </br>
 </br>
 
 ## Versionamiento
+
+(Tiber) **Febrero 2023 v1.1**
+* Testing
+
 
 (Tiber) **Febrero 2023 v1.0**
 
