@@ -2,8 +2,8 @@
 
 ## Requerimientos
 - [x] Objetos enviados y retornados en formato JSON
-- [x] Buenas prácticas (Clean Code, SOLID)
 - [x] Validación de Entrada de Datos
+- [x] Buenas prácticas (Clean Code, SOLID)
 - [x] TDD
 - [x] Java 8+
 - [x] SpringBoot
@@ -25,7 +25,7 @@
 - spring-boot-starter-actuator
 - spring-boot-starter-web
 - spring-boot-starter-data-jpa
-- postgresql
+- postgresql 15.2
 - spring-boot-starter-test
 - spring-boot-maven-plugin
 
@@ -87,7 +87,7 @@ El sistema Mi negocio permite registrar de manera rápida una factura a consumid
 
 ### Testing
 <div align="center">
-<img style="width:50%" src="./doc/testing.png" >
+<img style="width:40%" src="./doc/testing.png" >
 </div>
 
 </br>
