@@ -40,52 +40,74 @@ El sistema Mi negocio permite registrar de manera rápida una factura a consumid
 ## Resultado
 
 ### Crear
+
+Registro de un nuevo Cliente con una Dirección
 <div align="center">
 <img style="width:70%" src="./doc/postman-registro-1.png" >
 </div>
 </br>
+
+Error de creación: Cliente duplicado
 <div align="center">
 <img style="width:70%" src="./doc/postman-registro-2.png" >
 </div>
 </br>
+
+Error de creación: Validación de Entrada de Datos
 <div align="center">
 <img style="width:70%" src="./doc/postman-registro-3.png" >
 </div>
 
 ### Actualizar
+
+Actualización de los datos de un Cliente
 <div align="center">
 <img style="width:70%" src="./doc/postman-actualizar-1.png" >
 </div>
 
 ### Agregar Dirección
+
+Actualización de un Cliente agregando una Dirección adicional
 <div align="center">
 <img style="width:70%" src="./doc/postman-direccion-1.png" >
 </div>
 
 ### Buscar
+
+Al ingresar números busca automáticamente coincidencias en los **Números de Identificación**
 <div align="center">
 <img style="width:70%" src="./doc/postman-filtrar-1.png" >
 </div>
 </br>
+
+Al ingresar letras busca autómaticamente coincidencias en los **Nombres**
 <div align="center">
 <img style="width:70%" src="./doc/postman-filtrar-2.png" >
 </div>
 </br>
+
+Se puede ingresar cualquier combinación de letras y retorna las coincidencias
 <div align="center">
 <img style="width:70%" src="./doc/postman-filtrar-3.png" >
 </div>
 
 ### Listar Direcciones
+
+Devuelve un Cliente con todas las Direcciones registradas
 <div align="center">
 <img style="width:70%" src="./doc/postman-filtrar-direcciones.png" >
 </div>
 
 ### Eliminar
+
+Elimina un Cliente registrado
 <div align="center">
 <img style="width:70%" src="./doc/postman-destruir-1.png" >
 </div>
 
 ### Testing
+
+Se valida el correcto funcionamiento de cada Caso de Uso
 <div align="center">
 <img style="width:40%" src="./doc/testing.png" >
 </div>

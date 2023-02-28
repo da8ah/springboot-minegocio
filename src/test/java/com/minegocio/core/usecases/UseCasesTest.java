@@ -79,7 +79,7 @@ public class UseCasesTest {
         if (cliente3.isValid() && cliente3.getDirecciones().get(0).isValid()) {
             Assertions.assertEquals(true,
                     new CrearCliente().guardarCuentaCreada(
-                            cliente1,
+                            cliente3,
                             persistenciaCuenta));
         } else
             Assertions.assertFalse(cliente3.isValid());

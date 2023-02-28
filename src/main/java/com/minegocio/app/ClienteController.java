@@ -44,8 +44,10 @@ public class ClienteController {
         } catch (DataIntegrityViolationException e) {
             System.err.println(e);
             throw new ResponseStatusException(HttpStatus.SEE_OTHER, "Duplicado");
+        } catch (Exception e) {
+            System.err.println(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @GetMapping(API_PATH + "/filtrar")
